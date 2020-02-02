@@ -18,11 +18,16 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-Route::post('login', 'AuthController@login');
-Route::post('register', 'AuthController@register');
+Route::post('login', 'Api\AuthController@login');
+Route::post('register', 'Api\AuthController@register');
 
 Route::group(['middleware' => 'auth.jwt'], function() {
-    Route::get('logout', 'AuthController@logout');
+    Route::get('logout', 'Api\AuthController@logout');
 
-    //some more routes
+    //product routes
+    Route::get('products', 'Api\ProductController@index');
+    Route::get('products/{id}', 'Api\ProductController@show');
+    Route::post('products', 'Api\ProductController@store');
+    Route::put('products/{id}', 'Api\ProductController@update');
+    Route::delete('products/{id}', 'Api\ProductController@destroy');
 });
